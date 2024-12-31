@@ -1,5 +1,5 @@
 
-import 'package:curd/services/authServices.dart';
+
 import 'package:curd/view/login.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
