@@ -1,9 +1,15 @@
+import 'dart:developer';
+
 import 'package:curd/services/authServices.dart';
+import 'package:curd/view/home.dart';
 import 'package:curd/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+TextEditingController nameController = TextEditingController();
+TextEditingController emailController = TextEditingController();
+TextEditingController passwordController = TextEditingController();
+   RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +20,18 @@ class RegisterPage extends StatelessWidget {
            child: Column(
             spacing: 20,
             children: [
-             customTextfeild(lableText: 'Name'),
-             customTextfeild(lableText: 'Email'),
-             customTextfeild(lableText: 'Password'),
+             customTextfeild(lableText: 'Name',controller: nameController),
+             customTextfeild(lableText: 'Email',controller: emailController),
+             customTextfeild(lableText: 'Password',controller: passwordController),
 
                 ElevatedButton(onPressed: (){
-                  Authservices auth = Authservices();
-                  auth.registerUser();
+                  try {
+                    Authservices auth = Authservices();
+                  auth.registerUser(name: nameController.text, email: emailController.text, password: passwordController.text);
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
+                  } catch (e) {
+                    log("$e");
+                  }
                 }, child: Text("Register")),
 
                 TextButton(onPressed: (){

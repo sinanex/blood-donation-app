@@ -13,8 +13,9 @@ GestureDetector logincontainer({required String name}) {
     );
   }
 
-    TextField customTextfeild({required String lableText}) {
+    TextField customTextfeild({required String lableText,required TextEditingController controller}) {
     return TextField(
+      controller: controller,
             decoration: InputDecoration(
               labelText: lableText,
               labelStyle: TextStyle(

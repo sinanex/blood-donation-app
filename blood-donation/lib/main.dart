@@ -1,7 +1,10 @@
 
 
-import 'package:curd/view/login.dart';
+import 'package:curd/controller/provider.dart';
+import 'package:curd/view/authcheck.dart';
+import 'package:curd/view/home.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() {
@@ -17,8 +20,11 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: LoginPage(),
+    return ChangeNotifierProvider(
+      create: (context) => AuthController(),
+      child: MaterialApp(
+        home: HomePage(),
+      ),
     );
   }
 }

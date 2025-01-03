@@ -1,11 +1,15 @@
+import 'dart:developer';
+
 import 'package:curd/services/authServices.dart';
+import 'package:curd/view/home.dart';
 import 'package:curd/view/register.dart';
 import 'package:curd/widgets/widgets.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+   LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +39,8 @@ class LoginPage extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                customTextfeild(lableText: 'Email'),
-                customTextfeild(lableText: 'password'),
+                customTextfeild(lableText: 'Email',controller: emailController),
+                customTextfeild(lableText: 'password',controller: passwordController),
               ])),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -57,10 +61,20 @@ class LoginPage extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Authservices auth = Authservices();
-                    auth.loginUser();
+                   try {
+                      Authservices auth = Authservices();
+                    auth.loginUser(email: emailController.text,password: passwordController.text);
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
+                   } catch (e) {
+                     log("$e");
+                   }
                   },
                   child: Container(
+                    width: double.infinity,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.lightGreen),
                     child: Center(
                       child: Text(
                         "Login",
@@ -68,11 +82,6 @@ class LoginPage extends StatelessWidget {
                             fontWeight: FontWeight.bold, color: Colors.black),
                       ),
                     ),
-                    width: double.infinity,
-                    height: 50,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.lightGreen),
                   ),
                 ),
                 Row(
