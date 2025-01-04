@@ -1,121 +1,112 @@
-import 'dart:developer';
-
-import 'package:curd/services/authServices.dart';
-import 'package:curd/view/home.dart';
 import 'package:curd/view/register.dart';
-import 'package:curd/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-   LoginPage({super.key});
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-      child: Column(
-        children: [
-          Container(
-              width: double.infinity,
-              height: 200,
-              color: Colors.black,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 80,
-                  ),
-                  Text(
-                    "sign into your \n account",
-                    style: TextStyle(color: Colors.white, fontSize: 30),
-                  ),
-                ],
-              )),
-          Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(spacing: 30, children: [
-                SizedBox(
-                  height: 10,
-                ),
-                customTextfeild(lableText: 'Email',controller: emailController),
-                customTextfeild(lableText: 'password',controller: passwordController),
-              ])),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  "forgot password?",
-                  style: TextStyle(color: Colors.green),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
             child: Column(
-              spacing: 30,
+              spacing: 10,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                GestureDetector(
-                  onTap: () {
-                   try {
-                      Authservices auth = Authservices();
-                    auth.loginUser(email: emailController.text,password: passwordController.text);
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
-                   } catch (e) {
-                     log("$e");
-                   }
-                  },
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "Welcome Back",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Color(0xFF490008),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text("Email"),
+                TextField(),
+                Text("password"),
+                TextField(),
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: Container(
-                    width: double.infinity,
-                    height: 50,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.lightGreen),
                     child: Center(
-                      child: Text(
-                        "Login",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.black),
-                      ),
+                      child: Text("Login",style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.white
+                      ),),
+                    ),
+                    height: 60,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: const Color(0xFFE8315B),
                     ),
                   ),
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    logincontainer(name: 'Google'),
-                    logincontainer(name: 'Facebook'),
+                    Expanded(
+                      child: Divider(),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Text('or'),
+                    ),
+                    Expanded(
+                      child: Divider(),
+                    ),
                   ],
                 ),
-                Align(
-                  alignment: AlignmentDirectional.bottomEnd,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Don't have an account? "),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => RegisterPage()));
-                          },
-                          child: Text(
-                            "Register",
-                            style: TextStyle(color: Colors.green),
-                          ))
-                    ],
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    height: 70,
+                    width: double.infinity,
+                    child: Card(
+                      child: Center(
+                          child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Image.asset(
+                            'assets/googleimg.png',
+                            width: 40,
+                          ),
+                          Text("sign with google"),
+                        ],
+                      )),
+                    ),
                   ),
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("don't have an account ? "),
+                    TextButton(onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterPage()));
+                    }, child: Text("SignUp",style: TextStyle(
+
+                      color: const Color(0xFFE8315B),
+                    ),))
+                  ],
+                )
               ],
             ),
           ),
-        ],
+        ),
       ),
-    ));
+    );
   }
 }

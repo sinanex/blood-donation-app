@@ -1,9 +1,11 @@
 
-
+import 'package:curd/controller/dataprovider.dart';
 import 'package:curd/controller/provider.dart';
-import 'package:curd/view/authcheck.dart';
 import 'package:curd/view/home.dart';
+import 'package:curd/view/login.dart';
+import 'package:curd/view/register.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -20,10 +22,17 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AuthController(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthController(),),
+        ChangeNotifierProvider(create: (context) => Dataprovider(),),          
+      ],
       child: MaterialApp(
-        home: HomePage(),
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          textTheme: GoogleFonts.poppinsTextTheme()
+        ),
+        home: RegisterPage(),
       ),
     );
   }

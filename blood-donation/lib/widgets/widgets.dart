@@ -13,10 +13,13 @@ GestureDetector logincontainer({required String name}) {
     );
   }
 
-    TextField customTextfeild({required String lableText,required TextEditingController controller}) {
+    TextField customTextfeild({required String lableText,required TextEditingController controller,int? maxLength,String? prefixText,TextInputType? type}) {
     return TextField(
+      keyboardType: type,
+      maxLength: maxLength,
       controller: controller,
             decoration: InputDecoration(
+              prefixText: prefixText,
               labelText: lableText,
               labelStyle: TextStyle(
                 color: Colors.grey
