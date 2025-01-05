@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Authservices {
@@ -50,5 +51,35 @@ Future<void> loginUser({required String email,required String password}) async {
     log("Unexpected error: $e");
   }
 }
+
+Future<void> nativeGoogleSignIn() async {
+  log("google button taped");
+  const webClientId = '877061982570-lia1miufldckqojtc20hcum36j2mpmp5.apps.googleusercontent.com';
+
+  const iosClientId = '877061982570-lia1miufldckqojtc20hcum36j2mpmp5.apps.googleusercontent.com';
+
+  final GoogleSignIn googleSignIn = GoogleSignIn(
+    clientId: iosClientId,
+    serverClientId: webClientId,
+  );
+  final googleUser = await googleSignIn.signIn();
+  final googleAuth = await googleUser!.authentication;
+  final accessToken = googleAuth.accessToken;
+  final idToken = googleAuth.idToken;
+
+  if (accessToken == null) {
+    throw 'No Access Token found.';
+  }
+  if (idToken == null) {
+    throw 'No ID Token found.';
+  }
+ 
+  await Supabase.instance.client.auth.signInWithIdToken(
+    provider: OAuthProvider.google,
+    idToken: idToken,
+    accessToken: accessToken,
+  );
+} 
+
 
 }

@@ -39,6 +39,8 @@ dependencies:
   provider: ^6.1.2
   supabase_client: ^0.0.30
   google_fonts: ^6.2.1
+  firebase_core: ^3.9.0
+  google_sign_in: ^6.2.2
 
 dev_dependencies:
   flutter_test:

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "877061982570",
+    "project_id": "blood-bc231",
+    "storage_bucket": "blood-bc231.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:877061982570:android:ab6a10af0b3ec443c1bd13",
+        "android_client_info": {
+          "package_name": "com.example.curd"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsdXd8O9oxdEwQ1rtk_XroyEOiKGkdqs8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

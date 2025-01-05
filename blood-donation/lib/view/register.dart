@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:curd/services/authServices.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -27,6 +30,9 @@ class RegisterPage extends StatelessWidget {
                     TextField(),
                     Text("Password"),
                     TextField(),
+                    SizedBox(
+                      height: 40,
+                    ),
                     Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
@@ -63,21 +69,27 @@ class RegisterPage extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    height: 70,
-                    width: double.infinity,
-                    child: Card(
-                      child: Center(
-                          child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Image.asset(
-                            'assets/googleimg.png',
-                            width: 40,
-                          ),
-                          Text("sign with google"),
-                        ],
-                      )),
+                  child: GestureDetector(
+                    onTap: (){
+                      Authservices authservices = Authservices();
+                      authservices.nativeGoogleSignIn();
+                    },
+                    child: SizedBox(
+                      height: 70,
+                      width: double.infinity,
+                      child: Card(
+                        child: Center(
+                            child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Image.asset(
+                              'assets/googleimg.png',
+                              width: 40,
+                            ),
+                            Text("sign with google"),
+                          ],
+                        )),
+                      ),
                     ),
                   ),
                 ),
