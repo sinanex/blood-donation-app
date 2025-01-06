@@ -42,7 +42,16 @@ class AuthController extends ChangeNotifier {
   }
 
   Future<void> googleLogin() async {
-    await authservices.nativeGoogleSignIn();
+     AuthResponse response = await authservices.nativeGoogleSignIn();
+
+     if(response.session != null){
+       final user = response.user;
+       username = user?.userMetadata?['full_name'];
+       log(username.toString());
+       _storage.write(key: 'user', value: response.session.toString());
+       
+     }
+    
     notifyListeners();
   }
 
@@ -92,4 +101,6 @@ class AuthController extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+
 }

@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:curd/model/datamodel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -20,9 +19,9 @@ class Dataservices {
     return [];
   }
   Future<void> addData(Datamodel donerData)async{
-     final _donersData = donerData.toJson();
+     final donersData = donerData.toJson();
     try {
-   await supabase.from('doners').insert([_donersData]);
+   await supabase.from('doners').insert([donersData]);
     } catch (e) {
       log("$e");
     }

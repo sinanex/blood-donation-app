@@ -1,12 +1,11 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Authservices {
-  FlutterSecureStorage _storage = FlutterSecureStorage();
+  final FlutterSecureStorage _storage = FlutterSecureStorage();
   final supabse = Supabase.instance.client;
   Future<String?> registerUser(
       {required String name,
@@ -23,6 +22,7 @@ class Authservices {
           key: 'user', value: jsonEncode(response.session!.toJson()));
       return 'login success';
     }
+    return null;
   }
 
   Future<String?> loginUser(
@@ -36,9 +36,10 @@ class Authservices {
       _storage.write(key: 'user', value: jsonEncode(res.session!.toJson()));
       return 'success';
     }
+    return null;
   }
 
-  Future<void> nativeGoogleSignIn() async {
+  Future<AuthResponse> nativeGoogleSignIn() async {
     const webClientId =
         '877061982570-lia1miufldckqojtc20hcum36j2mpmp5.apps.googleusercontent.com';
 
@@ -60,7 +61,7 @@ class Authservices {
     if (idToken == null) {
       throw 'No ID Token found.';
     }
-    await Supabase.instance.client.auth.signInWithIdToken(
+    return Supabase.instance.client.auth.signInWithIdToken(
       provider: OAuthProvider.google,
       idToken: idToken,
       accessToken: accessToken,
