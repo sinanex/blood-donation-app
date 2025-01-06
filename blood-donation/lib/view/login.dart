@@ -96,9 +96,7 @@ class LoginPage extends StatelessWidget {
                   child: Consumer<AuthController>(
                     builder:(context, value, child) =>  GestureDetector(
                       onTap: () {
-                         value.googleLogin().then((_){
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomBar()));
-                         });
+                         value.googleLogin();
                       },
                       child: SizedBox(
                         height: 70,

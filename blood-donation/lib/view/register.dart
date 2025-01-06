@@ -1,7 +1,6 @@
 import 'package:curd/controller/provider.dart';
 import 'package:curd/services/authServices.dart';
 import 'package:curd/utils/utils.dart';
-import 'package:curd/view/bottomNavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +18,7 @@ class RegisterPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-              Constants.registerPageText,
+                Constants.registerPageText,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
@@ -43,6 +42,10 @@ class RegisterPage extends StatelessWidget {
                     TextField(
                       controller: value.passwordController,
                     ),
+                       Text("Password"),
+                    TextField(
+                      controller: value.confromPassController,
+                    ),
                   ],
                 ),
               ),
@@ -54,11 +57,7 @@ class RegisterPage extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     Provider.of<AuthController>(context, listen: false)
-                        .emailRegister()
-                        .then((_) {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => BottomBar()));
-                    });
+                        .emailRegister(context);
                   },
                   child: Container(
                     height: 60,

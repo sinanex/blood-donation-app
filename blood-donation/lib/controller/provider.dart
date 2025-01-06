@@ -11,10 +11,11 @@ class AuthController extends ChangeNotifier {
   String? username;
   String? email;
   Authservices authservices = Authservices();
-FlutterSecureStorage _storage = FlutterSecureStorage();
+  final FlutterSecureStorage _storage = FlutterSecureStorage();
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController confromPassController = TextEditingController();
   void checkSession() async {
     final session = authservices.supabse.auth.currentSession;
     username = authservices.supabse.auth.currentUser?.userMetadata?['name'];
@@ -30,7 +31,7 @@ FlutterSecureStorage _storage = FlutterSecureStorage();
 
   Future<void> signOut() async {
     authservices.supabse.auth.signOut();
-    
+
     final session = authservices.supabse.auth.currentSession;
     if (session == null) {
       log("user logout success");
@@ -45,33 +46,50 @@ FlutterSecureStorage _storage = FlutterSecureStorage();
     notifyListeners();
   }
 
-  Future<void> emailRegister() async {
-  try {
-        authservices.registerUser(
-        name: nameController.text,
-        email: emailController.text,
-        password: passwordController.text);
-    nameController.clear();
-    emailController.clear();
-    passwordController.clear();
-  } on AuthApiException catch (e) {
-    log(e.message);
+  Future<void> emailRegister(BuildContext context) async {
+    if (passwordController.text == confromPassController.text) {
+      if (passwordController.text.length > 6) {
+        try {
+          final response = await authservices.registerUser(
+              name: nameController.text,
+              email: emailController.text,
+              password: passwordController.text);
+          nameController.clear();
+          emailController.clear();
+          passwordController.clear();
+          if (response != null) {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => ProfilePage()));
+          }
+        } on AuthApiException catch (e) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(e.message)));
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("password minimum 6 charactor")));
+      }
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("password not match")));
+    }
 
-  };
-      notifyListeners();
+    notifyListeners();
   }
-  Future<void> loginUser(
-    BuildContext context
-  )async{
-  try {
-      final response = await authservices.loginUser(email: emailController.text, password: passwordController.text); 
- if(response != null){
-  log("login success");
-  Navigator.push(context, MaterialPageRoute(builder: (_)=>ProfilePage()));
- }
-  } on AuthApiException catch (e) {
-    log(e.message);
-  }
+
+  Future<void> loginUser(BuildContext context) async {
+    try {
+      final response = await authservices.loginUser(
+          email: emailController.text, password: passwordController.text);
+      if (response != null) {
+        log("login success");
+        Navigator.push(
+            context, MaterialPageRoute(builder: (_) => ProfilePage()));
+      }
+    } on AuthApiException catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.message)));
+    }
     notifyListeners();
   }
 }
