@@ -1,4 +1,5 @@
 import 'package:curd/controller/provider.dart';
+import 'package:curd/utils/utils.dart';
 import 'package:curd/view/bottomNavigation.dart';
 import 'package:curd/view/register.dart';
 import 'package:flutter/material.dart';
@@ -22,11 +23,11 @@ class LoginPage extends StatelessWidget {
                   height: 20,
                 ),
                 Text(
-                  "Welcome Back",
+                  Constants.loginPageText,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
-                    color: Color(0xFF490008),
+                    color: Constants.loginpageTextcolor,
                   ),
                 ),
                 SizedBox(
@@ -61,13 +62,13 @@ class LoginPage extends StatelessWidget {
                       height: 60,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: const Color(0xFFE8315B),
+                        color: Constants.mainColor,
                       ),
                       child: Center(
                         child: Text("Login",style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
-                          color: Colors.white
+                          color: Constants.CommontextColor
                         ),),
                       ),
                     ),
@@ -127,7 +128,7 @@ class LoginPage extends StatelessWidget {
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterPage()));
                     }, child: Text("SignUp",style: TextStyle(
 
-                      color: const Color(0xFFE8315B),
+                      color: Constants.mainColor,
                     ),))
                   ],
                 )

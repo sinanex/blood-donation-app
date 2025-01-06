@@ -1,4 +1,5 @@
 
+import 'package:curd/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +42,7 @@ class _RequestPageState extends State<RequestPage> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(0),
             ),
-            backgroundColor: const Color(0xFFE8315B),
+            backgroundColor: Constants.mainColor,
             collapsedHeight: 80,
             expandedHeight: 400,
             pinned: true,
@@ -59,7 +60,7 @@ class _RequestPageState extends State<RequestPage> {
                         const Text(
                           "Blood donors around you",
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Constants.CommontextColor,
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -68,7 +69,7 @@ class _RequestPageState extends State<RequestPage> {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
-                            color: Colors.white,
+                            color: Constants.CommontextColor,
                           ),
                         ),
                         Padding(
@@ -78,7 +79,7 @@ class _RequestPageState extends State<RequestPage> {
                             height: 60,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
+                              color: Constants.CommontextColor,
                             ),
                             child: Consumer<Dataprovider>(
                               builder: (context, dropdown, child) => Padding(
@@ -108,7 +109,7 @@ class _RequestPageState extends State<RequestPage> {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
-                            color: Colors.white,
+                            color: Constants.CommontextColor,
                           ),
                         ),
                         Padding(
@@ -121,7 +122,7 @@ class _RequestPageState extends State<RequestPage> {
                             Provider.of<Dataprovider>(context,listen: false).serchDoners();
                           },
                               decoration: InputDecoration(
-                                  fillColor: Colors.white,
+                                  fillColor: Constants.CommontextColor,
                                   filled: true,
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
@@ -140,7 +141,7 @@ class _RequestPageState extends State<RequestPage> {
                               width: 180,
                               height: 50,
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: Constants.CommontextColor,
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Row(
@@ -199,7 +200,7 @@ class _RequestPageState extends State<RequestPage> {
                                     borderRadius: BorderRadius.circular(10),
                         ),
                                   child: Center(child: Text(data.group??'',style: TextStyle(
-                                    color: Color(0xFFE8315B),
+                                    color: Constants.mainColor,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 25
                                   ),)),

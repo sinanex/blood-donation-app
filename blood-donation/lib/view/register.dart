@@ -1,5 +1,6 @@
 import 'package:curd/controller/provider.dart';
 import 'package:curd/services/authServices.dart';
+import 'package:curd/utils/utils.dart';
 import 'package:curd/view/bottomNavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,11 +19,11 @@ class RegisterPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Create an account",
+              Constants.registerPageText,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
-                  color: Color(0xFF490008),
+                  color: Constants.loginpageTextcolor,
                 ),
               ),
               Consumer<AuthController>(
@@ -63,7 +64,7 @@ class RegisterPage extends StatelessWidget {
                     height: 60,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: const Color(0xFFE8315B),
+                      color: Constants.mainColor,
                     ),
                     child: Center(
                       child: Text(
@@ -131,7 +132,7 @@ class RegisterPage extends StatelessWidget {
                       child: Text(
                         "login",
                         style: TextStyle(
-                          color: const Color(0xFFE8315B),
+                          color: Constants.mainColor,
                         ),
                       ))
                 ],
