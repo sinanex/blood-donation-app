@@ -28,16 +28,5 @@ class Dataservices {
     }
   }
 
-  // Future<void> addImage(var imagePath)async{
-
-  //   File image = File(imagePath.path);
-  //   try {
-  //     final imagePath = "image"+ DateTime.now().microsecondsSinceEpoch.toString();
-  //    final  storage = await supabase.storage.from('profile').upload(imagePath, image);
-     
-  //   } catch (e) {
-      
-  //   }
-  // }
 }
 

@@ -1,10 +1,12 @@
+import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Authservices {
-
+  FlutterSecureStorage _storage = FlutterSecureStorage();
   final supabse = Supabase.instance.client;
   Future<void> registerUser({required String name,required String email,required String password}) async {
       Map<String,dynamic> data = {"name":name};
@@ -30,17 +32,18 @@ class Authservices {
   }
 
 
-Future<void> loginUser({required String email,required String password}) async {
+Future<String?> loginUser({required String email,required String password}) async {
   try {
     final res = await supabse.auth.signInWithPassword(
       email: email,
       password: password,
     );
 
-    if (res.user != null) {
+    if (res.session != null) {
       log("User logged in successfully");
       log("User: ${res.user}");
-      
+       _storage.write(key: 'user', value: jsonEncode(res.session!.toJson())); 
+       return 'success';
     } else {
       log("Login failed: User is null");
     }
@@ -50,6 +53,7 @@ Future<void> loginUser({required String email,required String password}) async {
   } catch (e) {
     log("Unexpected error: $e");
   }
+  
 }
 
 Future<void> nativeGoogleSignIn() async {

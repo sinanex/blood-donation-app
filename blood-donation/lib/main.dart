@@ -1,9 +1,10 @@
 
+import 'package:curd/controller/bottomBarController.dart';
 import 'package:curd/controller/dataprovider.dart';
 import 'package:curd/controller/provider.dart';
-import 'package:curd/view/home.dart';
 import 'package:curd/view/login.dart';
-import 'package:curd/view/register.dart';
+import 'package:curd/view/profile.dart';
+import 'package:curd/view/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -25,14 +26,15 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthController(),),
-        ChangeNotifierProvider(create: (context) => Dataprovider(),),          
+        ChangeNotifierProvider(create: (context) => Dataprovider(),),    
+        ChangeNotifierProvider(create: (context)=> Bottombarcontroller())      
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           textTheme: GoogleFonts.poppinsTextTheme()
         ),
-        home: LoginPage(),
+        home: SplashScreen(),
       ),
     );
   }

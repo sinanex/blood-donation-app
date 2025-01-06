@@ -1,6 +1,8 @@
-import 'package:curd/services/authServices.dart';
+import 'package:curd/controller/provider.dart';
+import 'package:curd/view/bottomNavigation.dart';
 import 'package:curd/view/register.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -31,26 +33,43 @@ class LoginPage extends StatelessWidget {
                   height: 20,
                 ),
                 Text("Email"),
-                TextField(),
-                Text("password"),
-                TextField(),
+                Consumer<AuthController>(
+                  builder:(context, value, child) =>  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 10,
+                    children: [
+                      TextField(
+                        controller: value.emailController,
+                      ),
+                      Text("password"),
+                      TextField(
+                        controller: value.passwordController,
+                      ),
+                    ],
+                  ),
+                ),
                 SizedBox(
                   height: 20,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    child: Center(
-                      child: Text("Login",style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.white
-                      ),),
-                    ),
-                    height: 60,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: const Color(0xFFE8315B),
+                  child: GestureDetector(
+                    onTap: () {
+                      Provider.of<AuthController>(context,listen: false).loginUser(context);
+                    },
+                    child: Container(
+                      height: 60,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: const Color(0xFFE8315B),
+                      ),
+                      child: Center(
+                        child: Text("Login",style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.white
+                        ),),
+                      ),
                     ),
                   ),
                 ),
@@ -73,26 +92,29 @@ class LoginPage extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      Authservices authservices = Authservices();
-                      authservices.nativeGoogleSignIn();
-                    },
-                    child: SizedBox(
-                      height: 70,
-                      width: double.infinity,
-                      child: Card(
-                        child: Center(
-                            child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Image.asset(
-                              'assets/googleimg.png',
-                              width: 40,
-                            ),
-                            Text("sign with google"),
-                          ],
-                        )),
+                  child: Consumer<AuthController>(
+                    builder:(context, value, child) =>  GestureDetector(
+                      onTap: () {
+                         value.googleLogin().then((_){
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomBar()));
+                         });
+                      },
+                      child: SizedBox(
+                        height: 70,
+                        width: double.infinity,
+                        child: Card(
+                          child: Center(
+                              child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Image.asset(
+                                'assets/googleimg.png',
+                                width: 40,
+                              ),
+                              Text("sign with google"),
+                            ],
+                          )),
+                        ),
                       ),
                     ),
                   ),

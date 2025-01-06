@@ -33,7 +33,7 @@ class Dataprovider extends ChangeNotifier {
 
   Future addData() async {
     final data = Datamodel(
-      age: ageController.text,
+        age: ageController.text,
         group: newValue,
         name: nameController.text,
         phone: phoneController.text,
@@ -50,9 +50,11 @@ class Dataprovider extends ChangeNotifier {
   }
 
   void serchDoners() {
-    
-    filterList =
-        dataList.where((doners) => doners.location == locationController.text).toList();
+    filterList = dataList
+        .where((doners) =>
+            doners.location == locationController.text &&
+            doners.group == newValue)
+        .toList();
 
     notifyListeners();
   }
