@@ -1,4 +1,5 @@
 import 'package:curd/controller/provider.dart';
+import 'package:curd/view/editprofile.dart';
 import 'package:curd/view/login.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,14 +31,26 @@ class _ProfilePageState extends State<ProfilePage> {
               SizedBox(
                 height: 100,
               ),
-              Text('name : ${value.username ??''}'),
-              Text('email : ${value.email ??''}'),
+              Text('name : ${value.username ??'not provided'}'),
+              Text('email : ${value.email ??'not provided'}'),
+              Text('Phone : ${value.phone ?? 'not provided'}'),
+              Text('Blood group: ${value.bloodGruop ??'not provided'}'),
+              Text('Last blood Donate Date : ${value.lastDonate ?? 'not provided'}'),
 
-             TextButton(onPressed: (){
-              value.signOut().then((_){
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage()));
-              });
-             }, child: Text("logout"))
+             Row(
+               children: [
+                TextButton(onPressed: (){
+             
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>Editprofile()));
+            
+             }, child: Text("Edit Profile")),
+                 TextButton(onPressed: (){
+                  value.signOut().then((_){
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+                  });
+                 }, child: Text("logout")),
+               ],
+             ),
             ],
           ),
         ),

@@ -1,16 +1,20 @@
 import 'dart:developer';
 
 import 'package:curd/model/datamodel.dart';
+import 'package:curd/services/authServices.dart';
 import 'package:curd/services/dataServices.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Dataprovider extends ChangeNotifier {
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   TextEditingController ageController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
   List<Datamodel> dataList = [];
   List<Datamodel> filterList = [];
+  String? date;
   List<String> bloodGroupList = [
     'A+',
     'AB+',
@@ -26,6 +30,7 @@ class Dataprovider extends ChangeNotifier {
 
   String? newValue;
   Dataservices dataservices = Dataservices();
+  Authservices authservices = Authservices();
   void getData() async {
     dataList = await dataservices.getData();
     notifyListeners();
@@ -67,5 +72,19 @@ class Dataprovider extends ChangeNotifier {
   void checkRadioBTn(String value) {
     groupValue = value;
     notifyListeners();
+  }
+
+  void datePicker(BuildContext context)async{
+    log("date btn taped");
+     final dateData =await  showDatePicker(context: context, firstDate: DateTime(2000), lastDate: DateTime(2100),initialDate: DateTime.now());
+
+     if(dateData !=null){
+    dateController.text = DateFormat('dd/MM/yyyy').format(dateData);
+     }
+     notifyListeners();
+  }
+
+  void updateUser()async{
+    authservices.updateUserData(location: locationController.text, blood: newValue!, date: dateController.text, phone: phoneController.text, gender: groupValue!);
   }
 }

@@ -67,4 +67,10 @@ class Authservices {
       accessToken: accessToken,
     );
   }
+
+  Future<void> updateUserData({required String location, required String blood,required String date,required String phone,required String gender})async{
+    final data ={ 'location' : location,'blood-group':blood , 'gender':gender,'phone':phone,'last-donate':date};
+      await  supabse.auth.updateUser(UserAttributes(data: data ));
+      
+}
 }

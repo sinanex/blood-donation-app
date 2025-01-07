@@ -1,6 +1,5 @@
 import 'package:curd/controller/provider.dart';
 import 'package:curd/utils/utils.dart';
-import 'package:curd/view/bottomNavigation.dart';
 import 'package:curd/view/register.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -96,7 +95,7 @@ class LoginPage extends StatelessWidget {
                   child: Consumer<AuthController>(
                     builder:(context, value, child) =>  GestureDetector(
                       onTap: () {
-                         value.googleLogin();
+                         value.googleLogin(context);
                       },
                       child: SizedBox(
                         height: 70,

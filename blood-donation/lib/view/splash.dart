@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:curd/view/bottomNavigation.dart';
 import 'package:curd/view/login.dart';
 import 'package:curd/view/profile.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
    FlutterSecureStorage storage = FlutterSecureStorage();
     final session = await  storage.read(key: 'user');
     if(session != null){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx)=>ProfilePage()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx)=>BottomBar()));
     }else{
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx)=>LoginPage()));
     }
