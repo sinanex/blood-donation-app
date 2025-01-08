@@ -25,33 +25,36 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Consumer<AuthController>(
-          builder:(context, value, child) =>  Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 100,
-              ),
-              Text('name : ${value.username ??'not provided'}'),
-              Text('email : ${value.email ??'not provided'}'),
-              Text('Phone : ${value.phone ?? 'not provided'}'),
-              Text('Blood group: ${value.bloodGruop ??'not provided'}'),
-              Text('Last blood Donate Date : ${value.lastDonate ?? 'not provided'}'),
-
-             Row(
-               children: [
-                TextButton(onPressed: (){
-             
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>Editprofile()));
+          builder:(context, value, child) =>  Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 100,
+                ),
+                Text('name : ${value.username ??'not provided'}'),
+                Text('email : ${value.email ??'not provided'}'),
+                Text('Phone : ${value.phone ?? 'not provided'}'),
+                Text('Blood group: ${value.bloodGruop ??'not provided'}'),
+                Text('Last blood Donate Date : ${value.lastDonate ?? 'not provided'}'),
             
-             }, child: Text("Edit Profile")),
-                 TextButton(onPressed: (){
-                  value.signOut().then((_){
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage()));
-                  });
-                 }, child: Text("logout")),
-               ],
-             ),
-            ],
+               Row(
+                 children: [
+                  TextButton(onPressed: (){
+               
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Editprofile()));
+              
+               }, child: Text("Edit Profile")),
+                   TextButton(onPressed: (){
+                    value.signOut().then((_){
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+                    });
+                   }, child: Text("logout")),
+                 ],
+               ),
+              ],
+            ),
           ),
         ),
     );

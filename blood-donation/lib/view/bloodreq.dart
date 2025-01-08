@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:curd/controller/dataprovider.dart';
 import 'package:curd/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,11 @@ class BloodRequestPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text('Blood Request',style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+          color: Colors.white
+        ),),
         toolbarHeight: 80,
         backgroundColor: Constants.mainColor,
         shape: RoundedRectangleBorder(
@@ -29,6 +36,10 @@ class BloodRequestPage extends StatelessWidget {
               TextField(
                 controller: provider.nameController,
               ),
+                Text("phone"),
+              TextField(
+                controller: provider.phoneController,
+              ),
               Text('Blood Group'),
              DropdownButton<String>(
               hint: Text('select group'),
@@ -42,13 +53,15 @@ class BloodRequestPage extends StatelessWidget {
             }).toList(),
             onChanged: (String? value) {
               if (value != null) {
-                provider.setDropdownValue(value); // Update the provider's selected value
+                provider.setDropdownValue(value); 
               }
             },
           ),
           
                Text("number of unit"),
-              TextField(),
+              TextField(
+                controller: provider.unitController,
+              ),
               Text('Hospital Name'),
               TextField(
                 controller: provider.HospitalController,
@@ -82,7 +95,32 @@ class BloodRequestPage extends StatelessWidget {
               ),
               
                 ],
-              )
+              ),
+              Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      border: Border.all(
+                           color: const Color(0xFFE8315B),
+                      )
+                    ),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white
+                      ),
+                        onPressed: () {
+                          if (provider.newValue == null ) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("select a blood group")));
+                          }
+                          provider.addRequestData().then((_) {
+                            log("data added");
+                          });
+                        },
+                        child: Text('submit',style: TextStyle(
+                          fontSize: 20,
+                        color: const Color(0xFFE8315B),
+                        ),)),
+                  ),
             ],
           ),
         ),

@@ -1,6 +1,7 @@
 import 'package:curd/controller/provider.dart';
 import 'package:curd/utils/utils.dart';
 import 'package:curd/view/add.dart';
+import 'package:curd/view/notifications.dart';
 import 'package:curd/view/request.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -44,7 +45,9 @@ class _HomePageState extends State<HomePage> {
                           style:
                               TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                         )),
-                        IconButton(onPressed: (){}, icon: Icon(Iconsax.notification,color: Constants.mainColor,))
+                        IconButton(onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> NotificationPage()));
+                        }, icon: Icon(Iconsax.notification,color: Constants.mainColor,))
               ],
             ),
             ClipRRect(

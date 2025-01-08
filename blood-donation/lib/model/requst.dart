@@ -16,7 +16,7 @@ class RequstDatamodel {
       required this.phone,
       required this.unit});
 
-  factory RequstDatamodel.fromJson(Map<String, String> json) {
+  factory RequstDatamodel.fromJson(Map<String, dynamic> json) {
     return RequstDatamodel(
         Hospital: json['hospital'],
         blood: json['group'],

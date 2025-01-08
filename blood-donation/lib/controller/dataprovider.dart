@@ -1,11 +1,13 @@
 import 'dart:developer';
 
 import 'package:curd/model/datamodel.dart';
+import 'package:curd/model/requst.dart';
 import 'package:curd/services/authServices.dart';
 import 'package:curd/services/dataServices.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Dataprovider extends ChangeNotifier {
   TextEditingController nameController = TextEditingController();
@@ -17,6 +19,7 @@ class Dataprovider extends ChangeNotifier {
   TextEditingController unitController = TextEditingController();
   List<Datamodel> dataList = [];
   List<Datamodel> filterList = [];
+  List<RequstDatamodel> reqeustList =[];
   String? date;
   XFile? imageFile;
   String? imageUrl;
@@ -43,8 +46,8 @@ class Dataprovider extends ChangeNotifier {
   }
 
   Future addData() async {
-    final  data =  Datamodel(
-      image: imageUrl,
+    final data = Datamodel(
+        image: imageUrl,
         age: ageController.text,
         group: newValue,
         name: nameController.text,
@@ -81,43 +84,80 @@ class Dataprovider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void datePicker(BuildContext context)async{
+  void datePicker(BuildContext context) async {
     log("date btn taped");
-     final dateData =await  showDatePicker(context: context, firstDate: DateTime(2000), lastDate: DateTime(2100),initialDate: DateTime.now());
+    final dateData = await showDatePicker(
+        context: context,
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2100),
+        initialDate: DateTime.now());
 
-     if(dateData !=null){
-    dateController.text = DateFormat('dd/MM/yyyy').format(dateData);
-     }
-     notifyListeners();
+    if (dateData != null) {
+      dateController.text = DateFormat('dd/MM/yyyy').format(dateData);
+    }
+    notifyListeners();
   }
 
-  void updateUser()async{
-    authservices.updateUserData(location: locationController.text, blood: newValue!, date: dateController.text, phone: phoneController.text, gender: groupValue!);
+  void updateUser() async {
+    authservices.updateUserData(
+        location: locationController.text,
+        blood: newValue!,
+        date: dateController.text,
+        phone: phoneController.text,
+        gender: groupValue!);
   }
 
-  void imageAdd()async{
-       final image = await  ImagePicker().pickImage(source: ImageSource.gallery);
+  void imageAdd() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
 
-       if(image != null){
-        imageFile = image;
-       }
-       getImageUrl();
-       notifyListeners();
+    if (image != null) {
+      imageFile = image;
+    }
+    getImageUrl();
+    notifyListeners();
   }
 
   void getImageUrl() async {
+    final imagePath = await dataservices.addImageSupabse(imageFile!);
 
-  final imagePath = await dataservices.addImageSupabse(imageFile!);
+    if (imagePath != null) {
+      imageUrl = imagePath;
+      log("Image path received successfully: $imageUrl");
+    } else {
+      log("Image URL is null");
+    }
 
-  if (imagePath != null) {
-
-    imageUrl = imagePath;
-        log("Image path received successfully: $imageUrl");
-  } else {
-    log("Image URL is null");
+    notifyListeners();
   }
 
-  notifyListeners(); 
-}
+  addRequestData() async {
+    final data = RequstDatamodel(
+        Hospital: HospitalController.text,
+        blood: newValue,
+        date: dateController.text,
+        gender: groupValue,
+        name: nameController.text,
+        phone: phoneController.text,
+        unit: unitController.text);
+    dataservices.addRequestData(data);
 
+    HospitalController.clear();
+    nameController.clear();
+    dateController.clear();
+    phoneController.clear();
+    unitController.clear();
+    newValue = null;
+  }
+
+  getRequstDataa()async{
+ try {
+    reqeustList = await dataservices.getRequstData();
+  if(reqeustList.isNotEmpty){
+    log("data get successs");
+  }
+ } on PostgrestException catch (e) {
+   log(e.message);
+ }
+  notifyListeners();
+  }
 }
