@@ -4,6 +4,7 @@ import 'package:curd/model/datamodel.dart';
 import 'package:curd/services/authServices.dart';
 import 'package:curd/services/dataServices.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 class Dataprovider extends ChangeNotifier {
@@ -15,6 +16,9 @@ class Dataprovider extends ChangeNotifier {
   List<Datamodel> dataList = [];
   List<Datamodel> filterList = [];
   String? date;
+  XFile? imageFile;
+  String? imageUrl;
+  bool? isLodding = false;
   List<String> bloodGroupList = [
     'A+',
     'AB+',
@@ -37,7 +41,8 @@ class Dataprovider extends ChangeNotifier {
   }
 
   Future addData() async {
-    final data = Datamodel(
+    final  data =  Datamodel(
+      image: imageUrl,
         age: ageController.text,
         group: newValue,
         name: nameController.text,
@@ -87,4 +92,30 @@ class Dataprovider extends ChangeNotifier {
   void updateUser()async{
     authservices.updateUserData(location: locationController.text, blood: newValue!, date: dateController.text, phone: phoneController.text, gender: groupValue!);
   }
+
+  void imageAdd()async{
+       final image = await  ImagePicker().pickImage(source: ImageSource.gallery);
+
+       if(image != null){
+        imageFile = image;
+       }
+       getImageUrl();
+       notifyListeners();
+  }
+
+  void getImageUrl() async {
+
+  final imagePath = await dataservices.addImageSupabse(imageFile!);
+
+  if (imagePath != null) {
+
+    imageUrl = imagePath;
+        log("Image path received successfully: $imageUrl");
+  } else {
+    log("Image URL is null");
+  }
+
+  notifyListeners(); 
+}
+
 }

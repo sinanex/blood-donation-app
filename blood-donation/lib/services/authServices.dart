@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -40,32 +41,38 @@ class Authservices {
   }
 
   Future<AuthResponse> nativeGoogleSignIn() async {
-    const webClientId =
-        '877061982570-lia1miufldckqojtc20hcum36j2mpmp5.apps.googleusercontent.com';
-
-    const iosClientId =
-        '877061982570-lia1miufldckqojtc20hcum36j2mpmp5.apps.googleusercontent.com';
-
-    final GoogleSignIn googleSignIn = GoogleSignIn(
-      clientId: iosClientId,
-      serverClientId: webClientId,
-    );
-    final googleUser = await googleSignIn.signIn();
-    final googleAuth = await googleUser!.authentication;
-    final accessToken = googleAuth.accessToken;
-    final idToken = googleAuth.idToken;
-
-    if (accessToken == null) {
-      throw 'No Access Token found.';
-    }
-    if (idToken == null) {
-      throw 'No ID Token found.';
-    }
-    return Supabase.instance.client.auth.signInWithIdToken(
-      provider: OAuthProvider.google,
-      idToken: idToken,
-      accessToken: accessToken,
-    );
+    try {
+  const webClientId =
+      '877061982570-lia1miufldckqojtc20hcum36j2mpmp5.apps.googleusercontent.com';
+  
+  const iosClientId =
+      '877061982570-lia1miufldckqojtc20hcum36j2mpmp5.apps.googleusercontent.com';
+  
+  final GoogleSignIn googleSignIn = GoogleSignIn(
+    clientId: iosClientId,
+    serverClientId: webClientId,
+  );
+  final googleUser = await googleSignIn.signIn();
+  final googleAuth = await googleUser!.authentication;
+  final accessToken = googleAuth.accessToken;
+  final idToken = googleAuth.idToken;
+  
+  if (accessToken == null) {
+    throw 'No Access Token found.';
+  }
+  if (idToken == null) {
+    throw 'No ID Token found.';
+  }
+  return Supabase.instance.client.auth.signInWithIdToken(
+    provider: OAuthProvider.google,
+    idToken: idToken,
+    accessToken: accessToken,
+  );
+} on Exception catch (e) {
+  // TODO
+  log("$e");
+}
+ throw Exception();
   }
 
   Future<void> updateUserData({required String location, required String blood,required String date,required String phone,required String gender})async{

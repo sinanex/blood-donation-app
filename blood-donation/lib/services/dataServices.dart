@@ -1,6 +1,8 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:curd/model/datamodel.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Dataservices {
@@ -25,6 +27,21 @@ class Dataservices {
     } catch (e) {
       log("$e");
     }
+  }
+
+  Future<String?> addImageSupabse(XFile imagePAth)async{
+    final imageName = 'images${DateTime.now().millisecondsSinceEpoch.toString()}';
+  try {
+      await supabase.storage.from('profile').upload(imageName, File(imagePAth.path),fileOptions: FileOptions(upsert: true));
+
+      final url = await  supabase.storage.from('profile').getPublicUrl(imageName);
+      if(url.isNotEmpty){
+      return url;
+      }
+  } on StorageException catch (e) {
+    log(e.toString());
+  }
+  
   }
 
 }

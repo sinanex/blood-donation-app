@@ -106,7 +106,7 @@ class LoginPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Image.asset(
-                                'assets/googleimg.png',
+                                Constants.googleImg,
                                 width: 40,
                               ),
                               Text("sign with google"),

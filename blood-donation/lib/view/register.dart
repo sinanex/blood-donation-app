@@ -43,7 +43,7 @@ class RegisterPage extends StatelessWidget {
                       TextField(
                         controller: value.passwordController,
                       ),
-                         Text("Password"),
+                      Text("Password"),
                       TextField(
                         controller: value.confromPassController,
                       ),
@@ -111,7 +111,7 @@ class RegisterPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Image.asset(
-                              'assets/googleimg.png',
+                              Constants.googleImg,
                               width: 40,
                             ),
                             Text("sign with google"),

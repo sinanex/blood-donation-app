@@ -1,6 +1,10 @@
 
 
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:curd/controller/dataprovider.dart';
+import 'package:curd/services/dataServices.dart';
 
 import 'package:curd/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -40,10 +44,20 @@ class AddPage extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
+                
                 Consumer<Dataprovider>(
                   builder:(context, value, child) =>  Column(
                     spacing: 10,
                     children: [
+    CircleAvatar(
+      radius: 70,
+    child:  value.imageFile != null? Image.file(File(value.imageFile!.path)):Icon(Icons.add_a_photo),
+    ),
+
+       TextButton(onPressed: (){
+           value.imageAdd();
+       }, child: Text("Edit Image")),
+
                       customTextfeild(lableText: 'name', controller: value.nameController),
                       customTextfeild(lableText: 'age', controller: value.ageController),
                       customTextfeild(
@@ -93,8 +107,8 @@ class AddPage extends StatelessWidget {
                         },
                       ),
                       RadioListTile(
-                        title: Text("Femail"),
-                        value: 'femail',
+                        title: Text("Female"),
+                        value: 'female',
                         groupValue: radiobton.groupValue,
                         onChanged: (value) {
                             radiobton.checkRadioBTn(value!);
@@ -129,7 +143,8 @@ class AddPage extends StatelessWidget {
                                 SnackBar(content: Text("select a blood group")));
                           }
                           value.addData().then((_) {
-                            // Navigator.pop(context);
+                            log("data added");
+                      Navigator.pop(context);
                           });
                         },
                         child: Text('submit',style: TextStyle(

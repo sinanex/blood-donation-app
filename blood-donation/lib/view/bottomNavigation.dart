@@ -24,8 +24,8 @@ class BottomBar extends StatelessWidget {
             },
             items: [
               BottomNavigationBarItem(icon: Icon(Iconsax.home), label: 'home'),
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
-              BottomNavigationBarItem(icon: Icon(Iconsax.profile), label: 'home'),
+              BottomNavigationBarItem(icon: Icon(Iconsax.search_normal), label: 'search'),
+              BottomNavigationBarItem(icon: Icon(Iconsax.icon), label: 'reqeust'),
               BottomNavigationBarItem(icon: Icon(Iconsax.personalcard), label: 'profile'),
             ]),
       ),

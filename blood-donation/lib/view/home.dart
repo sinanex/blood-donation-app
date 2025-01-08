@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
             ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Image.asset(
-                    'assets/Screenshot 2025-01-04 at 1.37.32 PM.png')),
+                   Constants.mainScreenBannerImg)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                         spacing: 10,
                         children: [
                           Image.asset(
-                            'assets/3d-map.png',
+                            Constants.locationImg,
                             width: 30,
                           ),
                           Text('Find doners'),
@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                         spacing: 10,
                         children: [
                           Image.asset(
-                            'assets/add-user.png',
+                          Constants.adduserImg,
                             width: 30,
                           ),
                           Text('Add  doners'),
