@@ -13,6 +13,8 @@ class Dataprovider extends ChangeNotifier {
   TextEditingController locationController = TextEditingController();
   TextEditingController ageController = TextEditingController();
   TextEditingController dateController = TextEditingController();
+  TextEditingController HospitalController = TextEditingController();
+  TextEditingController unitController = TextEditingController();
   List<Datamodel> dataList = [];
   List<Datamodel> filterList = [];
   String? date;

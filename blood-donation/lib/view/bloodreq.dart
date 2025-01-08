@@ -26,7 +26,9 @@ class BloodRequestPage extends StatelessWidget {
             children: [
               SizedBox(height: 30,),
               Text("name"),
-              TextField(),
+              TextField(
+                controller: provider.nameController,
+              ),
               Text('Blood Group'),
              DropdownButton<String>(
               hint: Text('select group'),
@@ -48,9 +50,17 @@ class BloodRequestPage extends StatelessWidget {
                Text("number of unit"),
               TextField(),
               Text('Hospital Name'),
-              TextField(),
+              TextField(
+                controller: provider.HospitalController,
+              ),
            Text('Date'),
-           TextField(),
+           TextField(
+            
+            onTap: () {
+              provider.datePicker(context);
+            },
+            controller: provider.dateController,
+           ),
           
               Row(
                 children: [
